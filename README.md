@@ -1,18 +1,18 @@
-# Web Scraping with Regex
+# Regex를 사용한 Webスクレイピング
 
-[![Bright Data Promo](https://github.com/luminati-io/LinkedIn-Scraper/raw/main/Proxies%20and%20scrapers%20GitHub%20bonus%20banner.png)](https://brightdata.com/)
+[![Bright Data Promo](https://github.com/luminati-io/LinkedIn-Scraper/raw/main/Proxies%20and%20scrapers%20GitHub%20bonus%20banner.png)](https://brightdata.co.kr/)
 
-This guide explains how to use regular expressions in [Python for web scraping](https://brightdata.com/blog/how-tos/web-scraping-with-python):
+이 가이드는 [Python for web scraping](https://brightdata.co.kr/blog/how-tos/web-scraping-with-python)에서 정규 표현식을 사용하는 방법을 설명합니다:
 
-- [Understanding Regular Expressions](#understanding-regular-expressions)
-- [Implementing Regex in Python for Web Scraping](#implementing-regex-in-python-for-web-scraping)
-- [Constraints of Using Regex for Web Scraping](#constraints-of-using-regex-for-web-scraping)
+- [정규 표현식 이해하기](#understanding-regular-expressions)
+- [Webスクレイピング을 위한 Python에서의 Regex 구현](#implementing-regex-in-python-for-web-scraping)
+- [Webスクレイピング에서 Regex 사용의 제약 사항](#constraints-of-using-regex-for-web-scraping)
 
 ## What Is Regex
 
-Regular expressions (regex) are robust pattern-matching formulas for extracting information from text, making them valuable tools for web scraping. These expressions define specific patterns to match within texts, allowing for precise information extraction.
+정규 표현식(regex)은 텍스트에서 정보를 추출하기 위한 강력한 패턴 매칭 공식으로, Webスクレイピング에 유용한 도구입니다. 이러한 표현식은 텍스트 내에서 일치시킬 특정 패턴을 정의하여, 정밀한 정보 추출을 가능하게 합니다.
 
-In Python, regular expressions use tokens to match particular patterns. While covering all tokens is beyond this article's scope, here are some frequently used ones you'll encounter:
+Python에서 정규 표현식은 특정 패턴을 매칭하기 위해 토큰을 사용합니다. 모든 토큰을 다루는 것은 이 글의 범위를 벗어나지만, 아래는 자주 사용되며 접하게 될 몇 가지입니다:
 
 | Token | Matches |
 | --- | --- |
@@ -31,56 +31,56 @@ In Python, regular expressions use tokens to match particular patterns. While co
 | `\S` | Inverse of `\s` |
 | `\W` | Inverse of `\w` |
 
-For hands-on experience and to learn more about regex, visit [regexr.com](https://regexr.com/). Additionally, [this article](https://docs.bmc.com/docs/discovery/113/improving-the-performance-of-regular-expressions-788111995.html) provides essential tips for optimizing your regex performance.
+직접 실습하며 regex를 더 알아보려면 [regexr.com](https://regexr.com/)을 방문하십시오. 또한 [이 글](https://docs.bmc.com/docs/discovery/113/improving-the-performance-of-regular-expressions-788111995.html)에는 regex 성능을 최적화하기 위한 핵심 팁이 제공됩니다.
 
 ## Using Regex in Python for Web Scraping
 
-In this section, we'll develop a basic web scraper in Python using regex to extract data from various websites.
+이 섹션에서는 regex를 사용하여 다양한 웹사이트에서 데이터를 추출하는 기본 Python Webスクレイ퍼를 개발하겠습니다.
 
-First, create a project directory:
+먼저 프로젝트 디렉터리를 생성합니다:
 
 ```sh
 mkdir web_scraping_with_regex
 cd web_scraping_with_regex
 ```
 
-Then create a Python virtual environment:
+그다음 Python 가상 환경을 생성합니다:
 
 ```sh
 python -m venv venv
 ```
 
-Activate it:
+활성화합니다:
 
 ```sh
 source ./venv/bin/activate
 ```
 
-And on Windows:
+Windows에서는 다음을 실행합니다:
 
 ```
 venv\Scripts\activate
 ```
 
-For this web scraper, you'll need two libraries:
+이 Webスクレイ퍼에는 두 개의 라이브러리가 필요합니다:
 
-- `requests` for fetching web pages
-- `beautifulsoup4` for parsing the HTML content and locting elements
+- 웹 페이지를 가져오기 위한 `requests`
+- HTML 콘텐츠를 파싱하고 요소를 locting하기 위한 `beautifulsoup4`
 
-Install the libraries:
+라이브러리를 설치합니다:
 
 ```sh
 pip install beautifulsoup4 requests
 ```
 
 > **Note:**
-> Always check a website's terms and conditions before scraping to ensure it's permitted. Avoid scraping if explicitly forbidden.
+> スクレイピング하기 전에 항상 웹사이트의 약관을 확인하여 허용되는지 확인하십시오. 명시적으로 금지되어 있다면 スクレイピング을 피하십시오.
 
 ### Scraping an E-commerce Site
 
-Let's build a scraper that extracts book titles and prices from a [dummy e-commerce site](https://books.toscrape.com/). You’ll scrape the first page and extract the titles and prices of the books.
+[더미 이커머스 사이트](https://books.toscrape.com/)에서 책 제목과 가격을 추출하는 スクレイ퍼를 만들어 보겠습니다. 첫 페이지를 スクレイ핑하여 책의 제목과 가격을 추출합니다.
 
-Create a file named `scraper.py` and import the required modules:
+`scraper.py`라는 파일을 만들고 필요한 모듈을 import합니다:
 
 ```python
 import requests
@@ -88,53 +88,53 @@ from bs4 import BeautifulSoup
 import re
 ```
 
-> **Note:** The `re` module is a built-in Python module that works with regex.
+> **Note:** `re` 모듈은 regex를 다루는 Python 내장 모듈입니다.
 
-Next, make a GET request to fetch the web page's HTML content:
+다음으로 GET リクエスト를 보내 웹 페이지의 HTML 콘텐츠를 가져옵니다:
 
 
 ```python
 page = requests.get('https://books.toscrape.com/')
 ```
 
-Feed this data to Beautiful Soup to parse the HTML structure:
+이 데이터를 Beautiful Soup에 전달하여 HTML 구조를 파싱합니다:
 
 ```python
 soup = BeautifulSoup(page.content, 'html.parser')
 ```
 
-To figure out how the elements are structured in HTML, you use the **Inspect Element** tool. Open the [web page](https://books.toscrape.com/) in the browser and press **Ctrl + Shift + I** to open the **Inspector**. As you can see in the screenshot, the products are stored in `li` elements with class `col-xs-6 col-sm-4 col-md-3 col-lg-3`. The book title can be found from `a` elements by reading their `title` attribute, and the prices are stored in `p` elements with class `price_color`:
+요소가 HTML에서 어떻게 구성되어 있는지 파악하기 위해 **Inspect Element** 도구를 사용합니다. 브라우저에서 [웹 페이지](https://books.toscrape.com/)를 열고 **Ctrl + Shift + I**를 눌러 **Inspector**를 여십시오. 스크린샷에서 볼 수 있듯이, 상품은 class가 `col-xs-6 col-sm-4 col-md-3 col-lg-3`인 `li` 요소에 저장됩니다. 책 제목은 `a` 요소의 `title` 속성을 읽어 얻을 수 있으며, 가격은 class가 `price_color`인 `p` 요소에 저장됩니다:
 
 ![prices are stored in p elements with class price_color](https://github.com/luminati-io/web-scraping-with-regex/blob/main/images/prices-are-stored-in-p-elements-with-class-price_color.png)
 
-Use the `find_all` method of Beautiful Soup to find all `li` elements with class `col-xs-6 col-sm-4 col-md-3 col-lg-3`:
+Beautiful Soup의 `find_all` 메서드를 사용하여 class가 `col-xs-6 col-sm-4 col-md-3 col-lg-3`인 모든 `li` 요소를 찾습니다:
 
 ```python
 books = soup.find_all("li", class_="col-xs-6 col-sm-4 col-md-3 col-lg-3")
 content = str(books)
 ```
 
-The `content` variable now holds the HTML text of the `li` elements, and you can use regex to extract the titles and prices.
+이제 `content` 변수에는 `li` 요소의 HTML 텍스트가 들어 있으며, regex를 사용해 제목과 가격을 추출할 수 있습니다.
 
-First, create regex patterns that match book titles and prices by examining the HTML structure again.
+먼저 HTML 구조를 다시 살펴 책 제목과 가격에 매칭되는 regex 패턴을 생성합니다.
 
-The book titles are found in the `title` attribute of `a` elements, which look like:
+책 제목은 `a` 요소의 `title` 속성에 있으며 다음과 같은 형태입니다:
 
 ```html
 <a href="..." title="...">
 ```
 
-To capture the content within the double quotes after title, use the `.*?` regex pattern. Here, `.` matches any character, `*` matches zero or more occurrences of the preceding element, and `?` makes the match non-greedy. The complete expression is:
+title 뒤의 큰따옴표 안 콘텐츠를 캡처하려면 `.*?` regex 패턴을 사용합니다. 여기서 `.`는 어떤 문자든 매칭하고, `*`는 이전 요소의 0회 이상 반복을 매칭하며, `?`는 매칭을 비탐욕(non-greedy)으로 만듭니다. 전체 표현식은 다음과 같습니다:
 
 ```regex
 <a href=".*?" title="(.*?)"
 ```
 
-The parentheses around the `.*?` create a [capturing group](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Regular_expressions/Capturing_group), which stores the matched content for later use.
+`.*?` 주위의 괄호는 [capturing group](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Regular_expressions/Capturing_group)을 생성하며, 매칭된 콘텐츠를 나중에 사용할 수 있도록 저장합니다.
 
-For prices, use a similar approach. Since prices appear in `p` elements with class `price_color`, the regex pattern is `<p class="price_color">(.*?)</p>`.
+가격도 유사한 접근을 사용합니다. 가격은 class가 `price_color`인 `p` 요소에 나타나므로 regex 패턴은 `<p class="price_color">(.*?)</p>`입니다.
 
-Define both patterns:
+두 패턴을 정의합니다:
 
 ```python
 re_book_title = r'<a href=".*?" title="(.*?)"'
@@ -142,23 +142,23 @@ re_prices = r'<p class="price_color">(.*?)</p>'
 ```
 
 > **Note:**
-> In case you’re wondering why the `?` is needed after `.*`, [this Stack Overflow answer](https://stackoverflow.com/a/2301298) explains the role of `?` well.
+> `.*` 뒤에 `?`가 왜 필요한지 궁금하다면, 이 [Stack Overflow 답변](https://stackoverflow.com/a/2301298)이 `?`의 역할을 잘 설명합니다.
 
-Now, use `re.findall()` to find all regex matches from the HTML string:
+이제 `re.findall()`을 사용해 HTML 문자열에서 모든 regex 매치를 찾습니다:
 
 ```python
 titles = re.findall(re_book_title, content)
 prices = re.findall(re_prices, content)
 ```
 
-Finally, iterate over the matches and print the results:
+마지막으로 매치를 순회하며 결과를 출력합니다:
 
 ```python
 for i in zip(titles, prices):
     print(f"{i[0]}: {i[1]}")
 ```
 
-Run this code with `python scraper.py`. Here is the expected output:
+`python scraper.py`로 이 코드를 실행하십시오. 예상 출력은 다음과 같습니다:
 
 ```
 A Light in the Attic: £51.77
@@ -185,9 +185,9 @@ It's Only the Himalayas: £45.17
 
 ### Scraping a Wikipedia Page
 
-Now, let’s build a scraper that can scrape a [Wikipedia page](https://en.wikipedia.org/wiki/Web_scraping) and extract information about all the links.
+이제 [Wikipedia 페이지](https://en.wikipedia.org/wiki/Web_scraping)를 スクレイ핑하여 모든 링크에 대한 정보를 추출할 수 있는 スクレイ퍼를 만들어 보겠습니다.
 
-Create a new file named `wiki_scraper.py`. Similar to before, import the required libraries, make a GET request, and parse the content:
+`wiki_scraper.py`라는 새 파일을 생성합니다. 이전과 마찬가지로 필요한 라이브러리를 import하고, GET リクエスト를 수행한 뒤 콘텐츠를 파싱합니다:
 
 ```python
 import requests
@@ -198,22 +198,22 @@ page = requests.get('https://en.wikipedia.org/wiki/Web_scraping')
 soup = BeautifulSoup(page.content, 'html.parser')
 ```
 
-Use the `find_all()` method to find all the links:
+`find_all()` 메서드를 사용해 모든 링크를 찾습니다:
 
 ```python
 links = soup.find_all("a")
 content = str(links)
 ```
 
-Since link text appears in the `title` attribute and URLs in the `href` attribute, you can use the `(.*?)` pattern to capture both. The complete expression is:
+링크 텍스트는 `title` 속성에, URL은 `href` 속성에 나타나므로 `(.*?)` 패턴을 사용해 둘 다 캡처할 수 있습니다. 전체 표현식은 다음과 같습니다:
 
 ```regex
 <a href="(.*?)" title="(.*?)">.*?</a>
 ```
 
-Note that the third `.*?` is not in a capturing group because you aren’t interested in the content of the `a` tags.
+세 번째 `.*?`는 `a` 태그의 콘텐츠에는 관심이 없으므로 캡처링 그룹에 포함되지 않습니다.
 
-As before, use `findall()` to find all the matches and print the result:
+이전과 같이 `findall()`로 모든 매치를 찾고 결과를 출력합니다:
 
 ```python
 re_links = r'<a href="(.*?)" title="(.*?)">.*?</a>'
@@ -224,7 +224,7 @@ for i in links:
     print(f"{i[0]} => {i[1]}")
 ```
 
-When you run this with `python wiki_scraper.py`, you get the following output:
+`python wiki_scraper.py`로 실행하면 다음과 같은 출력이 나타납니다:
 
 ```
 OUTPUT TRUNCATED FOR BREVITY
@@ -245,7 +245,7 @@ OUTPUT TRUNCATED FOR BREVITY
 
 ### Scraping a Dynamic Site
 
-The previous examples involved static web pages. Scraping dynamic pages requires browser automation tools like [Selenium](https://www.selenium.dev/). Here's an example of extracting the current temperature from [OpenWeatherMap](https://openweathermap.org/) using Selenium and regex:
+이전 예시는 정적 웹 페이지를 다루었습니다. 동적 페이지를 スクレイピング하려면 [Selenium](https://www.selenium.dev/)과 같은 브라우저 자동화 도구가 필요합니다. 다음은 Selenium과 regex를 사용하여 [OpenWeatherMap](https://openweathermap.org/)에서 현재 온도를 추출하는 예시입니다:
 
 ```python
 from selenium import webdriver
@@ -265,31 +265,31 @@ print(repr(temp))
 driver.close()
 ```
 
-This code uses Selenium to launch an instance of Firefox and uses the CSS selector to select the element with the current temperature. It then uses the regex `<span .*?>(.*?)</span>` to extract the temperature.
+이 코드는 Selenium을 사용해 Firefox 인스턴스를 실행하고, CSS selector를 사용해 현재 온도가 있는 요소를 선택합니다. 그런 다음 regex `<span .*?>(.*?)</span>`를 사용해 온도를 추출합니다.
 
-This code launches Firefox with Selenium, selects the element containing the current temperature using a CSS selector, and then extracts the temperature using the regex pattern `<span .*?>(.*?)</span>`.
+이 코드는 Selenium으로 Firefox를 실행하고, CSS selector를 사용해 현재 온도를 포함한 요소를 선택한 다음, regex 패턴 `<span .*?>(.*?)</span>`를 사용하여 온도를 추출합니다.
 
-For even more information to help you get started with scraping dynamic web pages with Selenium, check out [this tutorial](https://brightdata.com/blog/how-tos/using-selenium-for-web-scraping).
+Selenium으로 동적 웹 페이지를 スクレイピング하는 방법을 시작하는 데 도움이 되는 추가 정보는 [이 튜토리얼](https://brightdata.co.kr/blog/how-tos/using-selenium-for-web-scraping)을 확인하십시오.
 
 ## Limitation of Regex for Web Scraping
 
-While regular expressions are powerful for pattern matching and data extraction, they have significant limitations for web scraping. Regex operates on text with no understanding of HTML structure, making results highly dependent on the HTML's formatting.
+정규 표현식은 패턴 매칭과 데이터 추출에 강력하지만, Webスクレイピング에는 중요한 한계가 있습니다. regex는 HTML 구조를 이해하지 못한 채 텍스트만을 대상으로 작동하므로, 결과가 HTML의 포맷팅에 크게 의존합니다.
 
-For instance, in the Wikipedia example, some links weren't correctly extracted:
+예를 들어 Wikipedia 예시에서 일부 링크는 올바르게 추출되지 않았습니다:
 
 ![Links that weren't exctracted correctly](https://github.com/luminati-io/web-scraping-with-regex/blob/main/images/Links-that-werent-exctracted-correctly.png)
 
-If you edit the Python code and add `print(content)` to print the HTML string returned by Beautiful Soup, you see the culprit `a` looks like this:
+Python 코드를 편집하여 `print(content)`를 추가하고 Beautiful Soup가 반환한 HTML 문자열을 출력하면, 문제의 `a`가 다음과 같이 보입니다:
 
 ```regex
 <a href="#cite_ref-9">^</a>
 ```
 
-This tag lacks a `title` attribute, yet our regex pattern assumes the structure `<a href="(.*?)" title="(.*?)">.*?</a>`. Because regex doesn't comprehend HTML elements, instead of failing to match, the `.*?` pattern keeps matching characters until it finds something that completes the pattern, often incorrectly capturing multiple tags.
+이 태그에는 `title` 속성이 없지만, 우리의 regex 패턴은 `<a href="(.*?)" title="(.*?)">.*?</a>` 구조를 가정합니다. regex는 HTML 요소를 이해하지 못하기 때문에 매칭에 실패하는 대신 `.*?` 패턴이 패턴을 완성하는 무언가를 찾을 때까지 계속 문자를 매칭하며, 종종 여러 태그를 잘못 캡처하게 됩니다.
 
-Furthermore, HTML isn't a regular language, meaning regex alone can't reliably parse arbitrary HTML. However, regex can be useful in specific scenarios. If you're working with a limited, known HTML structure, regex can extract information effectively. Still, a more robust approach is using an HTML parser like Beautiful Soup to find elements and then apply regex to process the extracted text.
+또한 HTML은 정규 언어가 아니므로, regex만으로 임의의 HTML을 신뢰성 있게 파싱할 수 없습니다. 하지만 regex는 특정 시나리오에서는 유용할 수 있습니다. 제한적이고 알려진 HTML 구조를 다루는 경우, regex는 정보를 효과적으로 추출할 수 있습니다. 그럼에도 더 견고한 접근은 Beautiful Soup 같은 HTML 파서를 사용해 요소를 찾고, 추출된 텍스트를 처리하는 데 regex를 적용하는 것입니다.
 
-Here's an improved version of the Wikipedia scraper that uses Beautiful Soup for initial extraction and regex for filtering:
+아래는 Wikipedia スクレ이퍼의 개선된 버전으로, 초기 추출에는 Beautiful Soup를 사용하고 필터링에는 regex를 사용합니다:
 
 ```python
 import requests
@@ -318,6 +318,6 @@ for link in links:
 
 ## Conclusion
 
-Regular expressions are valuable tools for finding patterns in text data. However, web scraping presents numerous challenges beyond regex capabilities. Frequent scraping can lead to IP blocking, and CAPTCHAs can disrupt your scraper's functionality. Bright Data offers [powerful proxies](https://brightdata.com/proxy-types) that can help overcome IP restrictions.
+정규 표현식은 텍스트 데이터에서 패턴을 찾는 데 유용한 도구입니다. 그러나 Webスクレイピング은 regex의 역량을 넘어서는 다양한 과제를 제시합니다. 스크レイピング을 자주 수행하면 IPアドレス 차단으로 이어질 수 있으며, CAPTCHA가 スクレイ퍼의 기능을 방해할 수 있습니다. Bright Data는 IP 제한을 극복하는 데 도움이 되는 [강력한 プロキシ](https://brightdata.co.kr/proxy-types)를 제공합니다.
 
-Start a free trial today!
+지금 무료 체험을 시작하십시오!
