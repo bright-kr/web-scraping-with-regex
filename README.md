@@ -1,6 +1,6 @@
 # Regex를 사용한 Webスクレイピング
 
-[![Bright Data Promo](https://github.com/luminati-io/LinkedIn-Scraper/raw/main/Proxies%20and%20scrapers%20GitHub%20bonus%20banner.png)](https://brightdata.co.kr/)
+[![Bright Data Promo](https://github.com/bright-kr/LinkedIn-Scraper/raw/main/Proxies%20and%20scrapers%20GitHub%20bonus%20banner.png)](https://brightdata.co.kr/)
 
 이 가이드는 [Python for web scraping](https://brightdata.co.kr/blog/how-tos/web-scraping-with-python)에서 정규 표현식을 사용하는 방법을 설명합니다:
 
@@ -105,7 +105,7 @@ soup = BeautifulSoup(page.content, 'html.parser')
 
 요소가 HTML에서 어떻게 구성되어 있는지 파악하기 위해 **Inspect Element** 도구를 사용합니다. 브라우저에서 [웹 페이지](https://books.toscrape.com/)를 열고 **Ctrl + Shift + I**를 눌러 **Inspector**를 여십시오. 스크린샷에서 볼 수 있듯이, 상품은 class가 `col-xs-6 col-sm-4 col-md-3 col-lg-3`인 `li` 요소에 저장됩니다. 책 제목은 `a` 요소의 `title` 속성을 읽어 얻을 수 있으며, 가격은 class가 `price_color`인 `p` 요소에 저장됩니다:
 
-![prices are stored in p elements with class price_color](https://github.com/luminati-io/web-scraping-with-regex/blob/main/images/prices-are-stored-in-p-elements-with-class-price_color.png)
+![prices are stored in p elements with class price_color](https://github.com/bright-kr/web-scraping-with-regex/blob/main/images/prices-are-stored-in-p-elements-with-class-price_color.png)
 
 Beautiful Soup의 `find_all` 메서드를 사용하여 class가 `col-xs-6 col-sm-4 col-md-3 col-lg-3`인 모든 `li` 요소를 찾습니다:
 
@@ -277,7 +277,7 @@ Selenium으로 동적 웹 페이지를 スクレイピング하는 방법을 시
 
 예를 들어 Wikipedia 예시에서 일부 링크는 올바르게 추출되지 않았습니다:
 
-![Links that weren't exctracted correctly](https://github.com/luminati-io/web-scraping-with-regex/blob/main/images/Links-that-werent-exctracted-correctly.png)
+![Links that weren't exctracted correctly](https://github.com/bright-kr/web-scraping-with-regex/blob/main/images/Links-that-werent-exctracted-correctly.png)
 
 Python 코드를 편집하여 `print(content)`를 추가하고 Beautiful Soup가 반환한 HTML 문자열을 출력하면, 문제의 `a`가 다음과 같이 보입니다:
 
