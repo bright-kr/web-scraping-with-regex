@@ -1,16 +1,16 @@
-# Regex를 사용한 Webスクレイピング
+# Regex를 사용한 Web스크레이핑
 
 [![Bright Data Promo](https://github.com/bright-kr/LinkedIn-Scraper/raw/main/Proxies%20and%20scrapers%20GitHub%20bonus%20banner.png)](https://brightdata.co.kr/)
 
 이 가이드는 [Python for web scraping](https://brightdata.co.kr/blog/how-tos/web-scraping-with-python)에서 정규 표현식을 사용하는 방법을 설명합니다:
 
 - [정규 표현식 이해하기](#understanding-regular-expressions)
-- [Webスクレイピング을 위한 Python에서의 Regex 구현](#implementing-regex-in-python-for-web-scraping)
-- [Webスクレイピング에서 Regex 사용의 제약 사항](#constraints-of-using-regex-for-web-scraping)
+- [Web스크레이핑을 위한 Python에서의 Regex 구현](#implementing-regex-in-python-for-web-scraping)
+- [Web스크레이핑에서 Regex 사용의 제약 사항](#constraints-of-using-regex-for-web-scraping)
 
 ## What Is Regex
 
-정규 표현식(regex)은 텍스트에서 정보를 추출하기 위한 강력한 패턴 매칭 공식으로, Webスクレイピング에 유용한 도구입니다. 이러한 표현식은 텍스트 내에서 일치시킬 특정 패턴을 정의하여, 정밀한 정보 추출을 가능하게 합니다.
+정규 표현식(regex)은 텍스트에서 정보를 추출하기 위한 강력한 패턴 매칭 공식으로, Web스크레이핑에 유용한 도구입니다. 이러한 표현식은 텍스트 내에서 일치시킬 특정 패턴을 정의하여, 정밀한 정보 추출을 가능하게 합니다.
 
 Python에서 정규 표현식은 특정 패턴을 매칭하기 위해 토큰을 사용합니다. 모든 토큰을 다루는 것은 이 글의 범위를 벗어나지만, 아래는 자주 사용되며 접하게 될 몇 가지입니다:
 
@@ -74,7 +74,7 @@ pip install beautifulsoup4 requests
 ```
 
 > **Note:**
-> スクレイピング하기 전에 항상 웹사이트의 약관을 확인하여 허용되는지 확인하십시오. 명시적으로 금지되어 있다면 スクレイピング을 피하십시오.
+> 스크레이핑하기 전에 항상 웹사이트의 약관을 확인하여 허용되는지 확인하십시오. 명시적으로 금지되어 있다면 스크레이핑을 피하십시오.
 
 ### Scraping an E-commerce Site
 
@@ -90,7 +90,7 @@ import re
 
 > **Note:** `re` 모듈은 regex를 다루는 Python 내장 모듈입니다.
 
-다음으로 GET リクエスト를 보내 웹 페이지의 HTML 콘텐츠를 가져옵니다:
+다음으로 GET 요청를 보내 웹 페이지의 HTML 콘텐츠를 가져옵니다:
 
 
 ```python
@@ -187,7 +187,7 @@ It's Only the Himalayas: £45.17
 
 이제 [Wikipedia 페이지](https://en.wikipedia.org/wiki/Web_scraping)를 スクレイ핑하여 모든 링크에 대한 정보를 추출할 수 있는 スクレイ퍼를 만들어 보겠습니다.
 
-`wiki_scraper.py`라는 새 파일을 생성합니다. 이전과 마찬가지로 필요한 라이브러리를 import하고, GET リクエスト를 수행한 뒤 콘텐츠를 파싱합니다:
+`wiki_scraper.py`라는 새 파일을 생성합니다. 이전과 마찬가지로 필요한 라이브러리를 import하고, GET 요청를 수행한 뒤 콘텐츠를 파싱합니다:
 
 ```python
 import requests
@@ -245,7 +245,7 @@ OUTPUT TRUNCATED FOR BREVITY
 
 ### Scraping a Dynamic Site
 
-이전 예시는 정적 웹 페이지를 다루었습니다. 동적 페이지를 スクレイピング하려면 [Selenium](https://www.selenium.dev/)과 같은 브라우저 자동화 도구가 필요합니다. 다음은 Selenium과 regex를 사용하여 [OpenWeatherMap](https://openweathermap.org/)에서 현재 온도를 추출하는 예시입니다:
+이전 예시는 정적 웹 페이지를 다루었습니다. 동적 페이지를 스크레이핑하려면 [Selenium](https://www.selenium.dev/)과 같은 브라우저 자동화 도구가 필요합니다. 다음은 Selenium과 regex를 사용하여 [OpenWeatherMap](https://openweathermap.org/)에서 현재 온도를 추출하는 예시입니다:
 
 ```python
 from selenium import webdriver
@@ -269,11 +269,11 @@ driver.close()
 
 이 코드는 Selenium으로 Firefox를 실행하고, CSS selector를 사용해 현재 온도를 포함한 요소를 선택한 다음, regex 패턴 `<span .*?>(.*?)</span>`를 사용하여 온도를 추출합니다.
 
-Selenium으로 동적 웹 페이지를 スクレイピング하는 방법을 시작하는 데 도움이 되는 추가 정보는 [이 튜토리얼](https://brightdata.co.kr/blog/how-tos/using-selenium-for-web-scraping)을 확인하십시오.
+Selenium으로 동적 웹 페이지를 스크레이핑하는 방법을 시작하는 데 도움이 되는 추가 정보는 [이 튜토리얼](https://brightdata.co.kr/blog/how-tos/using-selenium-for-web-scraping)을 확인하십시오.
 
 ## Limitation of Regex for Web Scraping
 
-정규 표현식은 패턴 매칭과 데이터 추출에 강력하지만, Webスクレイピング에는 중요한 한계가 있습니다. regex는 HTML 구조를 이해하지 못한 채 텍스트만을 대상으로 작동하므로, 결과가 HTML의 포맷팅에 크게 의존합니다.
+정규 표현식은 패턴 매칭과 데이터 추출에 강력하지만, Web스크레이핑에는 중요한 한계가 있습니다. regex는 HTML 구조를 이해하지 못한 채 텍스트만을 대상으로 작동하므로, 결과가 HTML의 포맷팅에 크게 의존합니다.
 
 예를 들어 Wikipedia 예시에서 일부 링크는 올바르게 추출되지 않았습니다:
 
@@ -318,6 +318,6 @@ for link in links:
 
 ## Conclusion
 
-정규 표현식은 텍스트 데이터에서 패턴을 찾는 데 유용한 도구입니다. 그러나 Webスクレイピング은 regex의 역량을 넘어서는 다양한 과제를 제시합니다. 스크レイピング을 자주 수행하면 IPアドレス 차단으로 이어질 수 있으며, CAPTCHA가 スクレイ퍼의 기능을 방해할 수 있습니다. Bright Data는 IP 제한을 극복하는 데 도움이 되는 [강력한 プロキシ](https://brightdata.co.kr/proxy-types)를 제공합니다.
+정규 표현식은 텍스트 데이터에서 패턴을 찾는 데 유용한 도구입니다. 그러나 Web스크레이핑은 regex의 역량을 넘어서는 다양한 과제를 제시합니다. 스크レイピング을 자주 수행하면 IP 주소 차단으로 이어질 수 있으며, CAPTCHA가 スクレイ퍼의 기능을 방해할 수 있습니다. Bright Data는 IP 제한을 극복하는 데 도움이 되는 [강력한 프록시](https://brightdata.co.kr/proxy-types)를 제공합니다.
 
 지금 무료 체험을 시작하십시오!
